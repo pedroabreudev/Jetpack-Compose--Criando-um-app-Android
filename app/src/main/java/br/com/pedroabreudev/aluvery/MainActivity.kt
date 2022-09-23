@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -41,48 +42,55 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun ProductItem() {
-    Column(
-        modifier = Modifier
-            .height(250.dp)
-            .width(200.dp)
+    Surface(
+        modifier = Modifier.padding(8.dp),
+        shape = RoundedCornerShape(15.dp),
+        elevation = 4.dp
     ) {
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            Purple500, Teal200
+                .heightIn(250.dp, 300.dp)
+                .width(200.dp)
+        ) {
+            val imageSize = 100.dp
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(imageSize)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(
+                                Purple500, Teal200
+                            )
                         )
                     )
+            ) {
+                Image(
+                    modifier = Modifier
+                        .size(imageSize)
+                        .offset(y = imageSize / 2)
+                        .clip(shape = CircleShape)
+                        .align(BottomCenter),
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    contentDescription = null,
                 )
-        ) {
-            Image(
-                modifier = Modifier
-                    .size(100.dp)
-                    .offset(y = (50).dp)
-                    .clip(shape = CircleShape)
-                    .align(BottomCenter),
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = null,
-            )
-        }
-        Spacer(modifier = Modifier.height(50.dp))
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = LoremIpsum(50).values.first(),
-                fontSize = 18.sp,
-                fontWeight = FontWeight(700),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                modifier = Modifier.padding(top = 8.dp),
-                text = "R$ 14,99",
-                fontSize = 14.sp,
-                fontWeight = FontWeight(400)
-            )
+            }
+            Spacer(modifier = Modifier.height(imageSize / 2))
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = LoremIpsum(50).values.first(),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight(700),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    modifier = Modifier.padding(top = 8.dp),
+                    text = "R$ 14,99",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight(400)
+                )
+            }
         }
     }
 }
